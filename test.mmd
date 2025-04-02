@@ -1,6 +1,6 @@
 graph TD;
     A[User Request: Create Sales Invoice] -->|POST /sales-invoices| B[Express Backend]
-    B -->|Calls NAV Codeunit| C[NAV "CreateSalesInvoice"]
+    B -->|Calls NAV Codeunit| C[NAV CreateSalesInvoice]
     
     C -->|Step 1: Create Invoice Header| D[Invoice Header Created]
     C -->|Step 2: Create Invoice Lines| E[Invoice Lines Created]
