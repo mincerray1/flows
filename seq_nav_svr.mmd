@@ -2,13 +2,9 @@ sequenceDiagram
     participant User
     participant Backend
     participant NAV
-    participant HeaderComponent
-    participant LinesComponent
     participant Database
 
     User->>Backend: POST /svr
     Backend->>NAV: Call CreateSalesAndVehicularReport
     NAV->>Header: Create SVR Header
-    HeaderComponent->>Database: Store Header
     NAV->>Lines: Create SVR Lines
-    LinesComponent->>Database: Store Lines
