@@ -1,0 +1,28 @@
+sequenceDiagram
+    participant User as User
+    participant Express as Express Backend
+    participant NAV as NAV Codeunit
+    participant Header as SVR Header Component
+    participant Lines as SVR Lines Component
+    participant HeaderDB as Invoice Header Database
+    participant LinesDB as Invoice Lines Database
+    participant Rollback as Rollback Component
+    participant UI as User Interface
+    participant Error as Error Handler
+
+    User->>Express: POST /svr
+    Express->>NAV: Call CreateSalesAndVehicularReport
+    NAV->>Header: Create SVR Header
+    Header->>HeaderDB: Store SVR Header
+    NAV->>Lines: Create SVR Lines
+    Lines->>LinesDB: Store SVR Lines
+
+    alt If Any Step Fails
+        NAV->>Rollback: Rollback Transaction
+        Rollback->>HeaderDB: Undo SVR Header
+        Rollback->>LinesDB: Undo SVR Lines
+        Rollback->>Error: Return Error
+    else If Success
+        NAV->>UI: Return Success
+        UI->>User: SVR Created
+    end
