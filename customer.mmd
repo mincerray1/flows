@@ -1,8 +1,7 @@
 flowchart TD
     A[Start] --> B[Web App Sends HTTP Request to Node/Express Server]
-    B --> C[Node/Express Makes OData GET Request to Dynamics NAV API]
+    B --> C[Web App Makes OData GET Request to Dynamics NAV API]
     C --> D[Dynamics NAV Returns Customer Data (JSON)]
-    D --> E[Node/Express Processes Data (optional)]
-    E --> F[Node/Express Sends Data to Web App]
-    F --> G[Web App Displays Customer Data]
-    G --> H[End]
+    D --> E[Web App Processes Data (optional)]
+    E --> F[Web App Displays Customer Data]
+    F --> G[End]
