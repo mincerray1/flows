@@ -8,7 +8,7 @@ sequenceDiagram
 
     User->>Backend: POST /svr
     Backend->>NAV: Call CreateSalesAndVehicularReport
-    NAV->>HeaderComponent: Create SVR Header
+    NAV->>Header: Create SVR Header
     HeaderComponent->>Database: Store Header
-    NAV->>LinesComponent: Create SVR Lines
+    NAV->>Lines: Create SVR Lines
     LinesComponent->>Database: Store Lines
