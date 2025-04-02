@@ -1,17 +1,25 @@
-graph TD;
-    User[User] -->|POST /svr| Express[Express Backend]
-    Express -->|Calls CreateSalesAndVehicularReport| NAV[NAV Codeunit]
-    
-    NAV -->|Create SVR Header| Header[SVR Header Component]
-    Header -->|Store SVR Header| HeaderDB[Invoice Header Database]
-    
-    NAV -->|Create SVR Lines| Lines[SVR Lines Component]
-    Lines -->|Store SVR Lines| LinesDB[Invoice Lines Database]
-    
-    NAV -->|If Any Step Fails| Rollback[Rollback Component]
-    Rollback -->|Undo SVR Header| HeaderDB
-    Rollback -->|Undo SVR Lines| LinesDB
-    
-    Rollback -->|Return Error| Error[Error Handler]
-    NAV -->|Return Success| UI[User Interface]
-    UI -->|Return SVR Created| User
+sequenceDiagram
+    participant User
+    participant Backend
+    participant NAV
+    participant HeaderComponent
+    participant LinesComponent
+    participant Database
+    participant Rollback
+    participant UI
+
+    User->>Backend: POST /svr
+    Backend->>NAV: Call CreateSalesAndVehicularReport
+    NAV->>HeaderComponent: Create SVR Header
+    HeaderComponent->>Database: Store Header
+    NAV->>LinesComponent: Create SVR Lines
+    LinesComponent->>Database: Store Lines
+
+    alt If Any Step Fails
+        NAV->>Rollback: Rollback Transaction
+        Rollback->>Database: Undo Changes
+        Rollback->>UI: Show Error
+    else If Success
+        NAV->>UI: Show Success
+        UI->>User: SVR Created
+    end
