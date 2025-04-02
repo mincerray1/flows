@@ -5,7 +5,6 @@ sequenceDiagram
     participant HeaderComponent
     participant LinesComponent
     participant Database
-    participant Rollback
     participant UI
 
     User->>Backend: POST /svr
@@ -14,12 +13,3 @@ sequenceDiagram
     HeaderComponent->>Database: Store Header
     NAV->>LinesComponent: Create SVR Lines
     LinesComponent->>Database: Store Lines
-
-    alt If Any Step Fails
-        NAV->>Rollback: Rollback Transaction
-        Rollback->>Database: Undo Changes
-        Rollback->>UI: Show Error
-    else If Success
-        NAV->>UI: Show Success
-        UI->>User: SVR Created
-    end
