@@ -13,3 +13,6 @@ graph TD;
     
     F -->|Return Success| I[Response to User: Invoice Created]
     H -->|Return Error| J[Response to User: Error Occurred]
+    
+    G -->|If Rollback is Needed| J
+    H -->|If Rollback is Needed| J
