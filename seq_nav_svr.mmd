@@ -4,7 +4,7 @@ sequenceDiagram
     participant NAV
     participant Database
 
-    Web App User->>Backend: POST /svr
+    User->>Backend: POST /svr
     Backend->>NAV: Call CreateSalesAndVehicularReport
-    NAV->>Header: Create SVR Header
-    NAV->>Lines: Create SVR Lines
+    NAV->>Database: Create SVR Header
+    NAV->>Database: Create SVR Lines
