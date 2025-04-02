@@ -1,0 +1,20 @@
+%% Component Diagram
+graph TD;
+    A[User Request: Create Sales Invoice] -->|POST /sales-invoices| B[Express Backend]
+    B -->|Calls NAV Codeunit| C[NAV CreateSalesInvoice]
+    
+    C --> D[Invoice Header Component]
+    C --> E[Invoice Lines Component]
+    
+    D -->|Creates Invoice Header| F[Invoice Header Database]
+    E -->|Creates Invoice Lines| G[Invoice Lines Database]
+    
+    C -->|If Any Step Fails| H[Rollback Component]
+    H -->|Undo Header & Lines| F
+    H -->|Undo Header & Lines| G
+    
+    B -->|Sends Success Response| I[User Interface]
+    B -->|Sends Error Response| J[Error Handler]
+    
+    F -->|Commit Changes| I
+    G -->|Commit Changes| I
